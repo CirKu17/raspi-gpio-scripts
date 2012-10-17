@@ -1,0 +1,5 @@
+#!/bin/bash
+
+temp_int=$( awk '/t=/ { print substr($NF,3,2) }' /sys/bus/w1/devices/28-000003611f55/w1_slave )
+temp_dec=$( awk '/t=/ { print substr($NF,5) }' /sys/bus/w1/devices/28-000003611f55/w1_slave )
+echo -e "DS18B20-gpio:\ntemperature:\t+"$temp_int"."$temp_dec"°C"

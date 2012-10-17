@@ -1,0 +1,26 @@
+#!/bin/bash
+
+pin_1="4"
+pin_2="17"
+
+cleanup(){
+	gpio -g write $pin_1 0
+	gpio -g write $pin_2 0
+	gpio unexport $pin_1
+	gpio unexport $pin_2
+	exit
+}
+
+gpio export $pin_1 out
+gpio export $pin_2 out
+
+trap cleanup SIGINT
+
+while true; do
+	gpio -g write $pin_1 1
+	sleep 1
+	gpio -g write $pin_1 0
+	gpio -g write $pin_2 1
+	sleep 1
+	gpio -g write $pin_2 0
+done
